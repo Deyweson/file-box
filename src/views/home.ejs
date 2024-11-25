@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="home.css">
+  <title>File Box</title>
+</head>
+
+<body>
+
+  <form method="post" enctype="multipart/form-data" action="/upload">
+    <label for="file" class="drop-container" id="dropcontainer">
+      <span class="drop-title">Drop files here</span>
+      or
+      <input type="file" name="file" id="file" accept="*/*" required>
+      <button>Send</button>
+    </label>
+  </form>
+
+
+  <div class="file-container">
+
+    <% if(files.length> 0){ %>
+      <% files.forEach((file)=> { %>
+        <% const path=`/${file.id}` %>
+          <div onclick='openFile(<%= JSON.stringify(file.id) %>)' class="file">
+            <div>
+              <p>
+                <%= file.name.split('.')[1].toLowerCase() %>
+              </p>
+            </div>
+            <p>
+              <%= file.name.split('.')[0] %>
+            </p>
+          </div>
+          <% }) %>
+    <% } else {%>
+      <p></p>
+    <%}%>
+
+  </div>
+
+  <script>
+    function openFile(id) {
+      window.location.href = `${id}`
+    }
+  </script>
+</body>
+
+</html>

@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css"
+    integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
+  <style>
+    body {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+    }
+
+    h1 {
+      margin: 100px 0 25px 0;
+    }
+    h3 {
+      margin: 25px 0px 50px 0px;
+    }
+  </style>
+  <title>Register</title>
+</head>
+
+<body>
+
+  <h1>File Box</h1>
+  <h3>Register</h3>
+
+  <form>
+    <div class="form-group">
+      <label for="username">Username</label>
+      <input type="username" class="form-control" id="username" aria-describedby="emailHelp"
+        placeholder="Enter username" required>
+    </div>
+    <div class="form-group">
+      <label for="password">Password</label>
+      <input type="password" class="form-control" id="password" placeholder="Password" required>
+    </div>
+    <button class="btn btn-primary">Register</button>
+  </form>
+  <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+  <script>
+    const username = document.querySelector('#username')
+    const password = document.querySelector('#password')
+    const submitBTN = document.querySelector('.btn')
+
+    submitBTN.addEventListener('click', (e) => {
+      e.preventDefault()
+      axios.post('/api/user/register', {
+        username: username.value,
+        password: password.value
+      }).then((response) => {
+        console.log(response.status)
+        alert('User registe sucess')
+      }).catch((erro) => {
+        console.log(erro)
+        if (erro.status >= 400) {
+          alert(erro.response.data.message)
+        }
+      })
+    })
+
+  </script>
+</body>
+
+</html>

@@ -1,5 +1,5 @@
 // app.js ou app.ts
-import express from 'express';
+import express, { Response } from 'express';
 import { upload } from './multer/configurations';
 import { db } from './database/knex';
 import { File } from './models/file';
@@ -13,7 +13,9 @@ app.set('view engine', 'ejs')
 app.set('views', path.join(__dirname, './views'))
 app.use(express.static(path.join(__dirname, './views')))
 
+
 app.use(userRoutes)
+
 
 app.get('/', (req, res) => {
   res.send('Hello')

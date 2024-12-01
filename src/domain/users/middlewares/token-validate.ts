@@ -1,22 +1,24 @@
-import { NextFunction, Response } from 'express';
+import { NextFunction, Response, Request } from 'express';
 import jwt from 'jsonwebtoken'
-import { IGetUserAuthInfoRequest } from '../../../interfaces/request-definition';
 
 interface JwtPayload {
   id: string
 }
 
-export function TokenValidate(req: IGetUserAuthInfoRequest, res: Response, next: NextFunction) : Response<any> | void {
-  const token = req.header('Authorization');
-  if (!token) {
+export async function TokenValidate(req: Request, res: Response, next: NextFunction): Promise<any> {
+  const { authorization } = req.headers
+  if (!authorization) {
     return res.status(401).json({ message: 'Acess denied' })
   }
 
   try {
-    const { id } = jwt.verify(token.split(' ')[1], 'secret-key') as JwtPayload
-    req.userId = Number(id)
+    const { id } = jwt.verify(authorization.split(' ')[1], 'secret-key') as JwtPayload
+
+    req.user.id = Number(id)
+
     next()
   } catch (er) {
     return res.status(401).json({ error: 'Invalid token' });
+    
   }
 }

@@ -1,22 +1,23 @@
-import express from 'express'
+import express, { Router, Request, Response } from 'express'
 import { RegisterUser } from './services.ts/register-user'
 import { LoginUser } from './services.ts/login-user'
 import { TokenValidate } from './middlewares/token-validate'
-import { IGetUserAuthInfoRequest } from '../../interfaces/request-definition'
 
-const userRoutes = express.Router()
+const userRoutes: Router = express.Router()
 
 userRoutes.post('/api/user/register', RegisterUser)
 userRoutes.post('/api/user/login', LoginUser)
 
-userRoutes.use(TokenValidate)
 
-userRoutes.get('/user', (req: IGetUserAuthInfoRequest, res) {
-  console.log(req.userId)
-  return res.send('ok')
-})
+async function profile(req: Request, res: Response) {
+  
+  return void res.send('ok')
 
-userRoutes.get('/view/user/register', async (req, res) => {
+}
+
+userRoutes.get('/user', TokenValidate, profile)
+
+userRoutes.get('/view/user/register', async (req: Request, res: Response) => {
   res.render('register')
 })
 

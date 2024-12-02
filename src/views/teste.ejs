@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="teste.css">
+  <title>Document</title>
+</head>
+
+<body>
+  <h1>File Box</h1>
+
+  <div class="files-containers">
+    <ul>
+      <% if (url.includes('?path=')) { %>
+        <li onclick="backFolder()" class="file">
+          <p>...</p>
+        </li>
+      <% } %>
+      <% files.forEach((file)=> { %>
+        <li class="file">
+          <% if(file.includes('.')){ %>
+              <p>
+                <%= file %>
+              </p>
+              <div>
+                <% const download = 'download/?path=' + downloadUrl + '/' + file %>
+                <a href=<%= download %>>baixar</a>
+                <p>excluir</p>
+              </div>
+          <% } else { %>
+            <p onclick='openFolder(<%= JSON.stringify(file) %>)'">
+              <%= file %>
+            </p>
+          <% }%>
+          </li>
+      <% }) %>
+  </ul>
+  </div>
+
+  <script>
+    function openFolder(str) {
+      let url = ''
+      if (window.location.href.includes('?path=')) {
+        url = window.location.href + '-' + str
+      } else {
+        url = window.location.href + '?path=' + str
+      }
+      console.log(window.location.href.split('path'))
+      window.location.href = url
+    }
+
+    function backFolder() {
+      let url = window.location.href.split('=')[0] + '='
+      const openFoldes = window.location.href.split('=')[1].split('-')
+      openFoldes.pop()
+      if (openFoldes.length < 1) {
+        url = window.location.href.split('?')[0]
+      } else {
+        url = url + openFoldes.join('-')
+      }
+      console.log(url)
+      window.location.href = url
+    }
+  </script>
+</body>
+
+</html>

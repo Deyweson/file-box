@@ -6,13 +6,20 @@ import { File } from './models/file';
 import path from 'node:path'
 import fs from 'fs'
 import userRoutes from './domain/users/user-routes';
+import bodyParser from 'body-parser'
+import cookieParser from 'cookie-parser'
+
 
 const app = express()
 app.use(express.json())
+
 app.set('view engine', 'ejs')
 app.set('views', path.join(__dirname, './views'))
 app.use(express.static(path.join(__dirname, './views')))
 
+app.use(cookieParser());
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json())
 
 app.use(userRoutes)
 

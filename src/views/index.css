@@ -1,0 +1,113 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');
+
+
+body {
+  background-color: #f8f8f8;
+  display: flex;
+  align-items: center;
+
+  flex-direction: column;
+  font-family: "Roboto", serif;
+}
+
+
+.file-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 120px;
+  height: 140px;
+  padding: 25px;
+  background-color: #fff;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  text-align: center;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  position: relative;
+  transition: box-shadow 0.3s;
+}
+
+.file-item:hover {
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.file-icon {
+  width: 60px;
+  height: 60px;
+  object-fit: cover;
+}
+
+.file-name {
+  margin-top: 10px;
+  font-size: 14px;
+  color: #333;
+  word-wrap: break-word;
+  max-width: 100%;
+}
+
+.file-actions {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  position: absolute;
+  bottom: 10px;
+  left: 50%;
+  transform: translateX(-50%);
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+
+.file-item:hover .file-actions {
+  opacity: 1;
+}
+
+.file-action-button {
+  background-color: #007bff;
+  border: none;
+  color: white;
+  padding: 5px 10px;
+  margin: 0 5px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 12px;
+}
+
+.file-action-button:hover {
+  background-color: #0056b3;
+}
+
+
+.file-container{
+  display: flex;
+  margin: 20px auto;
+  flex-direction: row;
+  flex-wrap: wrap;
+  gap: 15px;
+  width: 920px;
+}
+
+/* Responsividade */
+@media (max-width: 600px) {
+  .file-container{
+    width: 320px;
+  }
+  .file-item {
+    width: 100px;
+    height: 120px;
+  }
+
+  .file-icon {
+    width: 50px;
+    height: 50px;
+  }
+
+  .file-name {
+    font-size: 12px;
+  }
+
+  .file-action-button {
+    font-size: 10px;
+    padding: 4px 8px;
+  }
+}

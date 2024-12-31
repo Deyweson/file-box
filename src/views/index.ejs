@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>File Component Grid</title>
+  <link rel="stylesheet" href="index.css">
+</head>
+
+<body>
+
+  <h1>File Box</h1>
+
+  <div class="file-container">
+
+    <form method="post" enctype="multipart/form-data" action="/upload">
+      <label for="file" class="drop-container" id="dropcontainer">
+        <span class="drop-title">Drop files here</span>
+        or
+        <input type="file" name="file" id="file" accept="*/*" required>
+        <input type="text" name="pathfile" id="pathfile" style="display: none" value=<%= downloadUrl %> >
+        <button>Send</button>
+      </label>
+    </form>
+
+    <% if (url.includes('?path=')) { %>
+      <div class="file-item" style="cursor: pointer;" onclick="backFolder()">
+        <img src="./assets/back-folder.png" alt="File Type Icon" class="file-icon">
+        <div class="file-name">...</div>
+      </div>
+    <% } %>
+    <% files.forEach((file)=> { %>
+        <% if(file.includes('.')){ %>
+          <div class="file-item">
+            <img src="./assets/file.png" alt="File Type Icon" class="file-icon">
+            <div class="file-name"><%= file %></div>
+            <div class="file-actions">
+              <% const download = 'download/?path=' + downloadUrl + '/' + file %>
+              <a href=<%= download %>>
+                aa
+                <button class="file-action-button">Baixar</button>
+              </a>
+              <button class="file-action-button">Excluir</button>
+            </div>
+          </div>
+        <% } else { %>
+          <div class="file-item" style="cursor: pointer;" onclick='openFolder(<%= JSON.stringify(file) %>)'>
+            <img src="./assets/folder.png" alt="File Type Icon" class="file-icon">
+            <div class="file-name">
+              <%= file %>
+            </div>
+            <div class="file-actions">
+              <button class="file-action-button">Excluir</button>
+            </div>
+          </div>
+        <% }%>
+    <% }) %>
+
+
+
+    
+
+    
+
+    
+
+
+  </div>
+  <script>
+    function openFolder(str) {
+      let url = ''
+      if (window.location.href.includes('?path=')) {
+        url = window.location.href + '-' + str
+      } else {
+        url = window.location.href + '?path=' + str
+      }
+      console.log(window.location.href.split('path'))
+      window.location.href = url
+    }
+
+    function backFolder() {
+      let url = window.location.href.split('=')[0] + '='
+      const openFoldes = window.location.href.split('=')[1].split('-')
+      openFoldes.pop()
+      if (openFoldes.length < 1) {
+        url = window.location.href.split('?')[0]
+      } else {
+        url = url + openFoldes.join('-')
+      }
+      console.log(url)
+      window.location.href = url
+    }
+  </script>
+</body>
+
+</html>

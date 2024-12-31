@@ -1,6 +1,6 @@
 import { NextFunction, Response, Request } from 'express';
 import jwt from 'jsonwebtoken'
-import { db } from '../../../database/knex';
+import { db } from '../../database/knex';
 
 interface JwtPayload {
   id: string

@@ -5,9 +5,10 @@ import { db } from './database/knex';
 import { File } from './models/file';
 import path from 'node:path'
 import fs from 'fs'
-import userRoutes from './domain/users/user-routes';
+import userRoutes from './http/users/user-routes';
 import bodyParser from 'body-parser'
 import cookieParser from 'cookie-parser'
+import filesRoutes from './http/files/files-routes';
 
 
 const app = express()
@@ -22,24 +23,11 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json())
 
 app.use(userRoutes)
+app.use(filesRoutes)
 
 
-app.get('/', (req, res) => {
-  res.send('Hello')
-})
 
-app.post('/upload', upload.single('file'), async (req, res) => {
-  // Acesse o arquivo em req.file
-  console.log(req.file)
-  // Envie uma resposta apropriada
-  if (req.file) {
-    await db<File>('files').insert({
-      name: req.file?.originalname,
-      path: req.file?.path
-    })
-    res.redirect('/home')
-  }
-});
+
 
 app.get('/home', async (req, res) => {
   console.log(path.join('./views'))
